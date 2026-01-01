@@ -5,11 +5,11 @@
     <title>ARIS | Интеллектуальный голосовой ассистент с памятью</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="utilities.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="description" content="ARIS - интеллектуальный голосовой ассистент с памятью и управлением приложениями">
 </head>
@@ -364,13 +364,13 @@
         </footer>
     </div>
     <!-- Подключение скриптов -->
-    <script src="js/database.js"></script>
-    <script src="js/app-launcher.js"></script>
-    <script src="js/memory-manager.js"></script>
-    <script src="js/speech-manager.js"></script>
-    <script src="js/api-manager.js"></script>
-    <script src="js/ui-manager.js"></script>
-    <script src="js/main.js"></script> 
+    <script src="database.js"></script>
+    <script src="app-launcher.js"></script>
+    <script src="memory-manager.js"></script>
+    <script src="speech-manager.js"></script>
+    <script src="api-manager.js"></script>
+    <script src="ui-manager.js"></script>
+    <script src="main.js"></script> 
     <script>
         // Установка текущего года в футере
         document.getElementById('currentYear').textContent = new Date().getFullYear();  
