@@ -1,0 +1,237 @@
+/* Добавьте эти анимации в конец файла animations.css */
+
+/* Анимации для модальных окон */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+}
+
+/* Анимация для элементов памяти */
+@keyframes memoryItemAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.memory-list-item {
+    animation: memoryItemAppear 0.3s ease forwards;
+}
+
+.memory-list-item:nth-child(1) { animation-delay: 0.1s; }
+.memory-list-item:nth-child(2) { animation-delay: 0.2s; }
+.memory-list-item:nth-child(3) { animation-delay: 0.3s; }
+.memory-list-item:nth-child(4) { animation-delay: 0.4s; }
+.memory-list-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Анимация для бейджей */
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(157, 78, 221, 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(157, 78, 221, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(157, 78, 221, 0);
+    }
+}
+
+.badge.new {
+    animation: badgePulse 2s infinite;
+}
+
+/* Анимация для элементов команд */
+@keyframes commandGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 243, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+    }
+}
+
+.command-item:hover {
+    animation: commandGlow 2s infinite;
+}
+
+/* Анимация для приложений */
+@keyframes appIconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.quick-action-btn:hover i {
+    animation: appIconBounce 0.5s ease;
+}
+
+/* Анимация для индикатора памяти */
+@keyframes memoryWave {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.memory-indicator.active i {
+    animation: memoryWave 3s infinite;
+}
+
+/* Анимация для прогресса */
+@keyframes progressFill {
+    from {
+        width: 0%;
+    }
+    to {
+        width: var(--progress);
+    }
+}
+
+.progress-bar {
+    animation: progressFill 1s ease-out forwards;
+}
+
+/* Анимация для уведомлений */
+@keyframes notificationSlide {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification {
+    animation: notificationSlide 0.3s ease;
+}
+
+/* Анимация для загрузки данных */
+@keyframes dataLoading {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+.loading-skeleton {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 75%);
+    background-size: 200px 100%;
+    animation: dataLoading 1.5s infinite;
+}
+
+/* Анимация для переключения состояний */
+@keyframes stateTransition {
+    from {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.state-change {
+    animation: stateTransition 0.3s ease;
+}
+
+/* Анимация для всплывающих подсказок */
+@keyframes tooltipFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tooltip {
+    animation: tooltipFade 0.2s ease;
+}
+
+/* Анимация для обновления данных */
+@keyframes refreshSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.refreshing i {
+    animation: refreshSpin 1s linear infinite;
+}
+
+/* Анимация для появления элементов списка */
+@keyframes listItemStagger {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stagger-item {
+    opacity: 0;
+    animation: listItemStagger 0.3s ease forwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.stagger-item:nth-child(6) { animation-delay: 0.6s; }
+.stagger-item:nth-child(7) { animation-delay: 0.7s; }
+.stagger-item:nth-child(8) { animation-delay: 0.8s; }
+.stagger-item:nth-child(9) { animation-delay: 0.9s; }
+.stagger-item:nth-child(10) { animation-delay: 1s; }
