@@ -153,6 +153,22 @@
                 this.updateMemoryModal();
             });
 
+            this.components.ui.on('exportMemory', async () => {
+                await this.handleExportMemory();
+            });
+
+            this.components.ui.on('clearMemory', async () => {
+                await this.handleClearMemory();
+            });
+
+            this.components.ui.on('syncMemory', async () => {
+                await this.handleSyncMemory();
+            });
+
+            this.components.ui.on('exportData', async () => {
+                await this.handleExportData();
+            });
+
             // Речевые события
             this.components.speech.on('recognitionStart', () => {
                 this.components.ui.setVoiceStatus('listening');
@@ -428,8 +444,110 @@
             try {
                 await this.components.memory.updateStatistics();
                 await this.components.memory.updateMemoryPreview();
+                await this.components.memory.updateMemoryList();
+                await this.updateMemoryModalStats();
             } catch (error) {
                 console.error('Ошибка обновления модального окна памяти:', error);
+            }
+        }
+
+        async updateMemoryModalStats() {
+            try {
+                const stats = await this.components.memory.getMemorySummary();
+                if (stats) {
+                    const memoryCountEl = document.getElementById('memoryCount');
+                    const memorySizeEl = document.getElementById('memorySize');
+                    
+                    if (memoryCountEl) {
+                        memoryCountEl.textContent = stats.totalMemoryItems || 0;
+                    }
+                    
+                    if (memorySizeEl) {
+                        memorySizeEl.textContent = stats.storageUsage || '0 KB';
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка обновления статистики модального окна:', error);
+            }
+        }
+
+        async handleExportMemory() {
+            try {
+                this.components.ui.showToast('Экспорт памяти...', 'info');
+                const blob = await this.components.memory.exportMemory();
+                
+                if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ARIS_Память_${new Date().toISOString().slice(0, 10)}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    this.components.ui.showToast('Память успешно экспортирована', 'success');
+                } else {
+                    this.components.ui.showToast('Ошибка экспорта памяти', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка экспорта памяти:', error);
+                this.components.ui.showToast('Ошибка экспорта памяти: ' + error.message, 'error');
+            }
+        }
+
+        async handleClearMemory() {
+            try {
+                const success = await this.components.memory.clearAllMemory();
+                
+                if (success) {
+                    this.components.ui.showToast('Память успешно очищена', 'success');
+                    await this.updateMemoryModal();
+                    this.components.ui.hideMemoryModal();
+                } else {
+                    this.components.ui.showToast('Ошибка очистки памяти', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка очистки памяти:', error);
+                this.components.ui.showToast('Ошибка очистки памяти: ' + error.message, 'error');
+            }
+        }
+
+        async handleSyncMemory() {
+            try {
+                this.components.ui.showToast('Синхронизация памяти...', 'info');
+                await this.components.memory.updateStatistics();
+                await this.components.memory.updateMemoryPreview();
+                await this.updateMemoryModalStats();
+                this.components.ui.showToast('Память синхронизирована', 'success');
+            } catch (error) {
+                console.error('Ошибка синхронизации памяти:', error);
+                this.components.ui.showToast('Ошибка синхронизации памяти', 'error');
+            }
+        }
+
+        async handleExportData() {
+            try {
+                this.components.ui.showToast('Экспорт данных...', 'info');
+                const blob = await this.components.memory.exportMemory();
+                
+                if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ARIS_Данные_${new Date().toISOString().slice(0, 10)}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    this.components.ui.showToast('Данные успешно экспортированы', 'success');
+                } else {
+                    this.components.ui.showToast('Ошибка экспорта данных', 'error');
+                }
+            } catch (error) {
+                console.error('Ошибка экспорта данных:', error);
+                this.components.ui.showToast('Ошибка экспорта данных: ' + error.message, 'error');
             }
         }
 
