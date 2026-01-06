@@ -404,6 +404,20 @@ class SpeechManager {
         }
     }
 
+    pauseSpeaking() {
+        if (this.synth && this.isSpeaking) {
+            this.synth.pause();
+            this.emit('speechPaused');
+        }
+    }
+
+    resumeSpeaking() {
+        if (this.synth && this.synth.paused) {
+            this.synth.resume();
+            this.emit('speechResumed');
+        }
+    }
+
     async testVoice() {
         console.log('🎵 Тестирование голоса...');
         
