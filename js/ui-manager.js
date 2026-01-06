@@ -81,7 +81,15 @@ class UIManager {
             
             // Модальные окна
             'memoryModal': '#memoryModal',
-            'closeMemoryModal': '#closeMemoryModal'
+            'closeMemoryModal': '#closeMemoryModal',
+            'exportMemoryBtn': '#exportMemoryBtn',
+            'clearMemoryBtn': '#clearMemoryBtn',
+            'syncMemoryBtn': '#syncMemoryBtn',
+            'exportDataBtn': '#exportDataBtn',
+            'memoryList': '#memoryList',
+            'memoryCount': '#memoryCount',
+            'memorySize': '#memorySize',
+            'helpBtn': '#helpBtn'
         };
 
         await this.delay(100);
@@ -228,6 +236,11 @@ class UIManager {
     setupModalListeners() {
         const memoryBtn = this.elements.get('memoryBtn');
         const closeMemoryModal = this.elements.get('closeMemoryModal');
+        const exportMemoryBtn = this.elements.get('exportMemoryBtn');
+        const clearMemoryBtn = this.elements.get('clearMemoryBtn');
+        const syncMemoryBtn = this.elements.get('syncMemoryBtn');
+        const exportDataBtn = this.elements.get('exportDataBtn');
+        const helpBtn = this.elements.get('helpBtn');
         
         if (memoryBtn) {
             memoryBtn.addEventListener('click', () => this.showMemoryModal());
@@ -235,6 +248,35 @@ class UIManager {
         
         if (closeMemoryModal) {
             closeMemoryModal.addEventListener('click', () => this.hideMemoryModal());
+        }
+        
+        if (exportMemoryBtn) {
+            exportMemoryBtn.addEventListener('click', () => this.emit('exportMemory'));
+        }
+        
+        if (clearMemoryBtn) {
+            clearMemoryBtn.addEventListener('click', () => {
+                if (confirm('Вы уверены, что хотите очистить всю память? Это действие нельзя отменить.')) {
+                    this.emit('clearMemory');
+                }
+            });
+        }
+        
+        if (syncMemoryBtn) {
+            syncMemoryBtn.addEventListener('click', () => this.emit('syncMemory'));
+        }
+        
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.emit('exportData');
+            });
+        }
+        
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => {
+                this.showToast('Для помощи откройте README.md или посетите документацию проекта', 'info');
+            });
         }
     }
 
