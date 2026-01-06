@@ -114,7 +114,7 @@ class MemoryManager {
             }
             
             // Обновляем UI
-            this.updateUI();
+            await this.updateUI();
             
             console.log('💾 Разговор сохранен в память:', conversation.id);
             return conversation.id;
@@ -678,7 +678,7 @@ class MemoryManager {
         }
     }
 
-    updateUI() {
+    async updateUI() {
         const memoryCount = this.conversationMemory.length;
         
         // Обновляем бейдж памяти
@@ -700,8 +700,35 @@ class MemoryManager {
             conversationMemory.textContent = `Память: ${memoryCount} записей`;
         }
         
+        // Обновляем статистику сообщений
+        await this.updateMessageStats();
+        
         // Обновляем превью памяти
         this.updateMemoryPreview();
+    }
+
+    async updateMessageStats() {
+        try {
+            if (!window.arisDatabase || !window.arisDatabase.db) {
+                return;
+            }
+
+            const stats = await window.arisDatabase.getStatistics();
+            const totalMessagesEl = document.getElementById('totalMessages');
+            const todayMessagesEl = document.getElementById('todayMessages');
+
+            if (totalMessagesEl) {
+                totalMessagesEl.textContent = stats.conversations || 0;
+            }
+
+            if (todayMessagesEl) {
+                const today = new Date();
+                const todayConversations = await window.arisDatabase.getConversationsByDate(today);
+                todayMessagesEl.textContent = todayConversations.length || 0;
+            }
+        } catch (error) {
+            console.error('Ошибка обновления статистики сообщений:', error);
+        }
     }
 
     async updateMemoryPreview() {
@@ -745,6 +772,60 @@ class MemoryManager {
             memoryPreview.innerHTML = html;
         } catch (error) {
             console.error('Ошибка обновления превью памяти:', error);
+        }
+    }
+
+    async updateMemoryList() {
+        const memoryList = document.getElementById('memoryList');
+        if (!memoryList) return;
+        
+        try {
+            const recentMemories = await this.getRecentConversations(10);
+            
+            if (recentMemories.length === 0) {
+                memoryList.innerHTML = `
+                    <div class="empty-memory">
+                        <i class="fas fa-inbox"></i>
+                        <p>История разговоров пуста. Начните диалог!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            recentMemories.forEach((memory, index) => {
+                const date = new Date(memory.timestamp);
+                const time = date.toLocaleTimeString('ru-RU', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                const dateStr = date.toLocaleDateString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+                
+                html += `
+                    <div class="memory-item">
+                        <div class="memory-item-header">
+                            <span class="memory-item-date">${dateStr} ${time}</span>
+                            <span class="memory-item-id">#${index + 1}</span>
+                        </div>
+                        <div class="memory-item-content">
+                            <div class="memory-item-question">
+                                <strong>Вопрос:</strong> ${this.truncateText(memory.message, 100)}
+                            </div>
+                            <div class="memory-item-answer">
+                                <strong>Ответ:</strong> ${this.truncateText(memory.response, 150)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            memoryList.innerHTML = html;
+        } catch (error) {
+            console.error('Ошибка обновления списка памяти:', error);
         }
     }
 
