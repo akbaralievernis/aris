@@ -1,196 +1,59 @@
-🤖 ARIS — Интеллектуальный голосовой ассистент с памятью
+# ARIS — Интеллектуальный голосовой ассистент
 
-ARIS (Audio Recognition Intelligent Support) — это современный веб-ассистент с голосовым управлением, памятью диалогов и поддержкой AI-моделей Mistral AI и OpenAI.
+ARIS — веб-ассистент с голосовым вводом, синтезом речи и памятью. Этот репозиторий содержит текущий GitHub Pages фронтенд и production-ready backend-скелет для безопасной архитектуры.
 
-Проект полностью работает в браузере и может быть размещён на GitHub Pages без сервера.
+## 📌 Важно про безопасность
+- Клиент **не должен** хранить API-ключи.
+- Все запросы к LLM/STT/TTS идут через backend.
+- JWT, CORS, rate limit — обязательны.
 
-🌐 Демо (GitHub Pages)
+Полный аудит и план refactor см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L1-L201】
 
-После публикации сайт будет доступен по адресу:
-
-https://<username>.github.io/<repository-name>/
-
-✨ Возможности
-
-🎙 Голосовой ввод (Web Speech API)
-
-🗣 Синтез речи (Text-to-Speech)
-
-🧠 Память диалогов (localStorage)
-
-💬 Чат с AI (Mistral / OpenAI)
-
-🌙 Светлая / тёмная тема
-
-📜 История разговоров (последние 10)
-
-📦 Экспорт чата и памяти
-
-⚡ Современный UI + анимации
-
-🔐 Безопасное хранение API-ключа (локально)
-
-⚠️ Ограничения GitHub Pages (ВАЖНО)
-
-GitHub Pages — это статический хостинг, поэтому:
-
-❌ НЕ работают:
-
-Открытие программ на ПК (VS Code, Telegram, Spotify)
-
-Доступ к файловой системе
-
-Серверная память
-
-Backend-логика
-
-✔️ Работают:
-
-Голос
-
-Чат
-
-AI-ответы
-
-Память (localStorage)
-
-UI, анимации
-
-Экспорт данных
-
-💡 Для полного функционала (открытие приложений) нужен локальный сервер (Node.js / Python).
-
-🛠 Стек технологий
-
-HTML5
-
-CSS3 (animations, themes)
-
-JavaScript (Vanilla)
-
-Web Speech API
-
-Mistral AI API
-
-OpenAI API
-
-localStorage
-
-📁 Структура проекта
+## 📁 Структура проекта
+```
 /
 ├── index.html
-├── favicon.ico
 ├── css/
-│   ├── style.css
-│   ├── animations.css
-│   ├── theme.css
-│   ├── reset.css
-│   └── utilities.css
 ├── js/
-│   ├── main.js
-│   ├── api-manager.js
-│   ├── speech-manager.js
-│   ├── memory-manager.js
-│   ├── ui-manager.js
-│   ├── app-launcher.js
-│   └── database.js
-└── README.md
+├── backend/
+│   ├── src/
+│   ├── sql/
+│   ├── .env.example
+│   └── package.json
+└── docs/
+    └── production-refactor.md
+```
 
-🚀 Как запустить на GitHub Pages
+## 🚀 Запуск backend (Node.js)
 
-Создай репозиторий на GitHub
+### Вариант A (рекомендуется, из корня репозитория)
+```bash
+npm install
+cp backend/.env.example backend/.env
+npm start
+```
 
-Залей все файлы проекта
+### Вариант B (вручную из папки backend)
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm start
+```
 
-Перейди в Settings → Pages
+Backend стартует на `http://localhost:8080` и содержит:
+- `/api/auth/login`
+- `/api/turn`
+- `/health`
 
-Выбери:
+Подробности по `.env` и настройке провайдеров см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L67-L201】
 
-Source: Deploy from a branch
+## 🌐 GitHub Pages frontend
+Frontend остаётся статичным и должен отправлять аудио на `/api/turn` вашего backend. Пример кода отправки — в `docs/production-refactor.md`.【F:docs/production-refactor.md†L84-L135】
 
-Branch: main
+## 🧠 Память
+Серверная память хранится в SQLite (по умолчанию) и содержит историю + summary. Схема в `backend/sql/schema.sql`.【F:backend/sql/schema.sql†L1-L18】
 
-Folder: /root
+---
 
-Сохрани настройки
-
-Готово 🎉
-
-🔑 Настройка API
-Mistral AI
-
-Перейди:
-https://console.mistral.ai/api-keys/
-
-Создай ключ
-
-Вставь его в поле API Key на сайте
-
-OpenAI
-
-Перейди:
-https://platform.openai.com/api-keys
-
-Создай ключ
-
-Вставь его в настройках
-
-🔐 Ключ не отправляется на сервер и хранится только в браузере.
-
-🎙 Поддержка голоса
-
-Chrome / Edge — ✅ полностью
-
-Firefox — ⚠️ частично
-
-Safari — ⚠️ нестабильно
-
-Рекомендуется Google Chrome.
-
-📦 Экспорт данных
-
-Экспорт памяти
-
-Экспорт чата
-
-Все данные сохраняются в .json
-
-🧠 Память
-
-Хранится локально (localStorage)
-
-Последние 10 диалогов
-
-Можно очистить или экспортировать
-
-🧪 Тестирование
-
-✔ Проверено:
-
-Desktop Chrome
-
-GitHub Pages
-
-Без сервера
-
-🔮 Планы развития
-
-Backend (Node.js / Python)
-
-Облачная память
-
-Авторизация пользователей
-
-Расширенные голосовые команды
-
-Desktop-версия (Electron)
-
-👤 Автор
-
-Ernis (ARIS Project)
-🎓 Analyst / Programmer
-🤖 Voice Assistant Developer
-
-📜 Лицензия
-
-MIT License — свободно для использования и доработки.
+Если нужна помощь с внедрением альтернативных STT/TTS или деплоем — см. `docs/production-refactor.md`.【F:docs/production-refactor.md†L149-L201】

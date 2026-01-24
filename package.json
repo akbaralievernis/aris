@@ -1,0 +1,12 @@
+{
+  "name": "aris-root",
+  "private": true,
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "install:backend": "npm --workspace backend install",
+    "start": "npm --workspace backend start",
+    "dev": "npm --workspace backend run dev"
+  }
+}
