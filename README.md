@@ -7,7 +7,7 @@ ARIS — веб-ассистент с голосовым вводом, синт�
 - Все запросы к LLM/STT/TTS идут через backend.
 - JWT, CORS, rate limit — обязательны.
 
-Полный аудит и план refactor см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L1-L189】
+Полный аудит и план refactor см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L1-L201】
 
 ## 📁 Структура проекта
 ```
@@ -26,6 +26,14 @@ ARIS — веб-ассистент с голосовым вводом, синт�
 
 ## 🚀 Запуск backend (Node.js)
 
+### Вариант A (рекомендуется, из корня репозитория)
+```bash
+npm install
+cp backend/.env.example backend/.env
+npm start
+```
+
+### Вариант B (вручную из папки backend)
 ```bash
 cd backend
 npm install
@@ -38,14 +46,14 @@ Backend стартует на `http://localhost:8080` и содержит:
 - `/api/turn`
 - `/health`
 
-Подробности по `.env` и настройке провайдеров см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L67-L189】
+Подробности по `.env` и настройке провайдеров см. в `docs/production-refactor.md`.【F:docs/production-refactor.md†L67-L201】
 
 ## 🌐 GitHub Pages frontend
-Frontend остаётся статичным и должен отправлять аудио на `/api/turn` вашего backend. Пример кода отправки — в `docs/production-refactor.md`.【F:docs/production-refactor.md†L94-L140】
+Frontend остаётся статичным и должен отправлять аудио на `/api/turn` вашего backend. Пример кода отправки — в `docs/production-refactor.md`.【F:docs/production-refactor.md†L84-L135】
 
 ## 🧠 Память
 Серверная память хранится в SQLite (по умолчанию) и содержит историю + summary. Схема в `backend/sql/schema.sql`.【F:backend/sql/schema.sql†L1-L18】
 
 ---
 
-Если нужна помощь с внедрением альтернативных STT/TTS или деплоем — см. `docs/production-refactor.md`.【F:docs/production-refactor.md†L149-L181】
+Если нужна помощь с внедрением альтернативных STT/TTS или деплоем — см. `docs/production-refactor.md`.【F:docs/production-refactor.md†L149-L201】
