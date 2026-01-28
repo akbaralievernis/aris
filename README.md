@@ -1,196 +1,84 @@
-🤖 ARIS — Интеллектуальный голосовой ассистент с памятью
-
-ARIS (Audio Recognition Intelligent Support) — это современный веб-ассистент с голосовым управлением, памятью диалогов и поддержкой AI-моделей Mistral AI и OpenAI.
-
-Проект полностью работает в браузере и может быть размещён на GitHub Pages без сервера.
-
-🌐 Демо (GitHub Pages)
-
-После публикации сайт будет доступен по адресу:
-
-https://<username>.github.io/<repository-name>/
-
-✨ Возможности
-
-🎙 Голосовой ввод (Web Speech API)
-
-🗣 Синтез речи (Text-to-Speech)
-
-🧠 Память диалогов (localStorage)
-
-💬 Чат с AI (Mistral / OpenAI)
-
-🌙 Светлая / тёмная тема
-
-📜 История разговоров (последние 10)
-
-📦 Экспорт чата и памяти
-
-⚡ Современный UI + анимации
-
-🔐 Безопасное хранение API-ключа (локально)
-
-⚠️ Ограничения GitHub Pages (ВАЖНО)
-
-GitHub Pages — это статический хостинг, поэтому:
-
-❌ НЕ работают:
-
-Открытие программ на ПК (VS Code, Telegram, Spotify)
-
-Доступ к файловой системе
-
-Серверная память
-
-Backend-логика
-
-✔️ Работают:
-
-Голос
-
-Чат
-
-AI-ответы
-
-Память (localStorage)
-
-UI, анимации
-
-Экспорт данных
-
-💡 Для полного функционала (открытие приложений) нужен локальный сервер (Node.js / Python).
-
-🛠 Стек технологий
-
-HTML5
-
-CSS3 (animations, themes)
-
-JavaScript (Vanilla)
-
-Web Speech API
-
-Mistral AI API
-
-OpenAI API
-
-localStorage
-
-📁 Структура проекта
-/
-├── index.html
-├── favicon.ico
-├── css/
-│   ├── style.css
-│   ├── animations.css
-│   ├── theme.css
-│   ├── reset.css
-│   └── utilities.css
-├── js/
-│   ├── main.js
-│   ├── api-manager.js
-│   ├── speech-manager.js
-│   ├── memory-manager.js
-│   ├── ui-manager.js
-│   ├── app-launcher.js
-│   └── database.js
-└── README.md
-
-🚀 Как запустить на GitHub Pages
-
-Создай репозиторий на GitHub
-
-Залей все файлы проекта
-
-Перейди в Settings → Pages
-
-Выбери:
-
-Source: Deploy from a branch
-
-Branch: main
-
-Folder: /root
-
-Сохрани настройки
-
-Готово 🎉
-
-🔑 Настройка API
-Mistral AI
-
-Перейди:
-https://console.mistral.ai/api-keys/
-
-Создай ключ
-
-Вставь его в поле API Key на сайте
-
-OpenAI
-
-Перейди:
-https://platform.openai.com/api-keys
-
-Создай ключ
-
-Вставь его в настройках
-
-🔐 Ключ не отправляется на сервер и хранится только в браузере.
-
-🎙 Поддержка голоса
-
-Chrome / Edge — ✅ полностью
-
-Firefox — ⚠️ частично
-
-Safari — ⚠️ нестабильно
-
-Рекомендуется Google Chrome.
-
-📦 Экспорт данных
-
-Экспорт памяти
-
-Экспорт чата
-
-Все данные сохраняются в .json
-
-🧠 Память
-
-Хранится локально (localStorage)
-
-Последние 10 диалогов
-
-Можно очистить или экспортировать
-
-🧪 Тестирование
-
-✔ Проверено:
-
-Desktop Chrome
-
-GitHub Pages
-
-Без сервера
-
-🔮 Планы развития
-
-Backend (Node.js / Python)
-
-Облачная память
-
-Авторизация пользователей
-
-Расширенные голосовые команды
-
-Desktop-версия (Electron)
-
-👤 Автор
-
-Ernis (ARIS Project)
-🎓 Analyst / Programmer
-🤖 Voice Assistant Developer
-
-📜 Лицензия
-
-MIT License — свободно для использования и доработки.
+# ARIS — Кыргызча үн жардамчы (Next.js)
+
+ARIS — браузерде иштеген кыргыз тилиндеги үн жардамчы. Wake word (beta) жана push‑to‑talk режимдери, VAD негизиндеги сүйлөө токтотуу, барж-ин (TTS ойнотулуп жатканда сүйлөп жиберсеңиз кайра угуу) жана сервер тарабында коопсуз сакталган API ачкычтары менен иштейт.
+
+## Өзгөчөлүктөр
+
+- Wake word (beta) жана push‑to‑talk (default, ишенимдүү).
+- VAD: ~900мс тынчтыкта автоматтык токтотуу.
+- Barge‑in: TTS ойнотулуп жатканда сүйлөп жиберсеңиз, TTS токтоп кайра угат.
+- Kyrgyz-only жооптор (сервердик валидатор менен).
+- Server‑managed key (default) жана per‑user key (AES‑256‑GCM менен шифрленип сакталат).
+- Prisma + PostgreSQL + NextAuth (email/password).
+
+## Техникалык стек
+
+- Next.js (App Router) + TypeScript + Tailwind
+- Prisma + PostgreSQL
+- NextAuth (Credentials)
+- OpenAI: STT (Whisper), LLM, TTS
+
+## Файл дарагы (негизги бөлүктөр)
+
+```
+app/
+  api/
+    auth/
+      [...nextauth]/route.ts
+      register/route.ts
+    user/secret/route.ts
+    voice/route.ts
+  login/page.tsx
+  register/page.tsx
+  settings/page.tsx
+  page.tsx
+components/
+  VoiceAssistant.tsx
+lib/
+  auth.ts
+  crypto.ts
+  kyrgyz.ts
+  prisma.ts
+  provider.ts
+  rate-limit.ts
+prisma/
+  schema.prisma
+```
+
+## Айлана‑чөйрө өзгөрмөлөрү
+
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/aris"
+NEXTAUTH_SECRET="<random-32+chars>"
+NEXTAUTH_URL="http://localhost:3000"
+MASTER_KEY="<base64-encoded-32-bytes>"
+OPENAI_API_KEY="<server-managed-key>"
+```
+
+> `MASTER_KEY` мисал: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
+
+## Иштетүү
+
+```bash
+npm install
+npm run prisma:generate
+npm run prisma:migrate
+npm run dev
+```
+
+## Production
+
+```bash
+npm run build
+npm start
+```
+
+## Коопсуздук
+
+- API ачкычтары браузерге берилбейт.
+- Per‑user key AES‑256‑GCM менен шифрленип, DB'де сакталат.
+- Rate limit жана аудио көлөм чектөөсү бар.
+
+## Эскертүү
+
+Wake word режими Web Speech API'ге таянат жана бардык браузерлерде ишенимдүү эмес. Push‑to‑talk режимин сунуштайбыз.
