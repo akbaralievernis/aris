@@ -55,6 +55,8 @@ MASTER_KEY="<base64-encoded-32-bytes>"
 OPENAI_API_KEY="<server-managed-key>"
 ```
 
+> Prisma 7 колдонулса, байланыш `DATABASE_URL` аркылуу `prisma.config.ts` файлында алынат.
+
 > `MASTER_KEY` мисал: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
 
 ## Иштетүү
